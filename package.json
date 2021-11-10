@@ -1,0 +1,19 @@
+{
+  "name": "twitter-webscraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+
+  },
+  "author": "Yash",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "path": "^0.12.7",
+    "puppeteer": "^11.0.0"
+  }
+}
