@@ -53,6 +53,8 @@ app.get('/updateFollowers', async (req, res) => {
         return td.innerText;
     }))
 
+    // console.log(data)
+
     browser.close()
 
     let tableData = {
@@ -62,21 +64,21 @@ app.get('/updateFollowers', async (req, res) => {
         followers: []
     }
 
-    let n1 = 5, n2 = 7, n3 = 6
+    let n1 = 3, n2 = 5, n3 = 4
 
     data.forEach((item, i) => {
 
         if (i == n1) {
             tableData.ids.push(item)
-            n1 += 5
+            n1 += 3
         }
         else if (i == n2) {
             tableData.urls.push(item)
-            n2 += 5
+            n2 += 3
         }
         else if (i == n3) {
             tableData.names.push(item)
-            n3 += 5
+            n3 += 3
         }
     })
 
