@@ -47,7 +47,12 @@ app.get('/updateFollowers', async (req, res) => {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
 
-    await page.goto('https://docs.google.com/spreadsheets/d/e/2PACX-1vSDk0YMJfOJiMruKS7oGdXIGZb6-m1ybnNv0ikw8o7xZRsaNUCv6RqeucuLNUjP752HRlqVAK0LssFp/pubhtml?gid=0&single=true', { waitUntil: 'networkidle2' })
+    try {
+        await page.goto('https://docs.google.com/spreadsheets/d/e/2PACX-1vSDk0YMJfOJiMruKS7oGdXIGZb6-m1ybnNv0ikw8o7xZRsaNUCv6RqeucuLNUjP752HRlqVAK0LssFp/pubhtml?gid=0&single=true', { waitUntil: 'networkidle2' })
+    }
+    catch (e) {
+        res.send({mssg: "Some error occured, please refresh", err: e})
+    }
 
     const data = await page.$$eval('table tr td', tds => tds.map((td) => {
         return td.innerText;
@@ -89,7 +94,7 @@ app.get('/updateFollowers', async (req, res) => {
     let html = ``
 
     for (let i = 0; i < tableData.ids.length; i++) {
-        
+
         html += `<tr>
                     <td>${tableData.ids[i]}</td>
                     <td>${tableData.names[i]}</td>
