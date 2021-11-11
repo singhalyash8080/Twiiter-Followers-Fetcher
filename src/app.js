@@ -18,7 +18,12 @@ const getFollowers = async (url) => {
     const browser = await puppeteer.launch({ headless: true })
     const page = await browser.newPage()
 
-    await page.goto(url, { waitUntil: 'networkidle2' })
+    try {
+        await page.goto(url, { waitUntil: 'networkidle2' })
+
+    } catch (e) {
+        res.send({ mssg: "Some error occured, please refresh", err: e })
+    }
 
     const results = await page.$$eval('div', (tweets) => tweets.map((tweet) => tweet.textContent))
 
@@ -51,7 +56,7 @@ app.get('/updateFollowers', async (req, res) => {
         await page.goto('https://docs.google.com/spreadsheets/d/e/2PACX-1vSDk0YMJfOJiMruKS7oGdXIGZb6-m1ybnNv0ikw8o7xZRsaNUCv6RqeucuLNUjP752HRlqVAK0LssFp/pubhtml?gid=0&single=true', { waitUntil: 'networkidle2' })
     }
     catch (e) {
-        res.send({mssg: "Some error occured, please refresh", err: e})
+        res.send({ mssg: "Some error occured, please refresh", err: e })
     }
 
     const data = await page.$$eval('table tr td', tds => tds.map((td) => {
