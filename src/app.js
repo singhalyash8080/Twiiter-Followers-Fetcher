@@ -114,7 +114,7 @@ app.get('/updateFollowers', async (req, res) => {
             }
         }
         catch (e) {
-            res.send({ mssg: "Some error occured, please refresh", err: e })
+            return res.send({ mssg: "Some error occured, please refresh", err: e })
         }
     }))
 
@@ -132,7 +132,7 @@ app.get('/updateFollowers', async (req, res) => {
                 </tr>`
     }
 
-    res.send(`<!DOCTYPE html>
+    return res.send(`<!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
