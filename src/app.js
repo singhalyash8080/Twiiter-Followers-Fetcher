@@ -15,7 +15,11 @@ app.get('/', (req, res) => {
 
 const getFollowers = async (url) => {
 
-    const browser = await puppeteer.launch({ headless: true })
+    // const browser = await puppeteer.launch({ headless: true })
+    const browser = await puppeteer.launch({
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+     })
     const page = await browser.newPage()
 
     try {
@@ -49,7 +53,11 @@ const getFollowers = async (url) => {
 
 app.get('/updateFollowers', async (req, res) => {
 
-    const browser = await puppeteer.launch({ headless: true });
+    // const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+     })
     const page = await browser.newPage();
 
     try {
