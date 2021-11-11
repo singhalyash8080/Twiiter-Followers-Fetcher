@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const puppeteer = require('puppeteer')
+const e = require('express')
 const app = express()
 
 // enabling cors
@@ -19,14 +20,14 @@ const getFollowers = async (url) => {
     const browser = await puppeteer.launch({
         headless: true,
         args: ['--no-sandbox']
-     })
+    })
     const page = await browser.newPage()
 
     try {
         await page.goto(url, { waitUntil: 'networkidle2' })
 
     } catch (e) {
-        res.send({ mssg: "Some error occured, please refresh", err: e })
+        return "Not working"
     }
 
     const results = await page.$$eval('div', (tweets) => tweets.map((tweet) => tweet.textContent))
@@ -57,7 +58,7 @@ app.get('/updateFollowers', async (req, res) => {
     const browser = await puppeteer.launch({
         headless: true,
         args: ['--no-sandbox']
-     })
+    })
     const page = await browser.newPage();
 
     try {
@@ -100,7 +101,22 @@ app.get('/updateFollowers', async (req, res) => {
         }
     })
 
-    tableData.followers = await Promise.all(tableData.urls.map(async (url) => await getFollowers(url)))
+    tableData.followers = await Promise.all(tableData.urls.map(async (url) => {
+
+        try {
+            const followers = await getFollowers(url)
+
+            if(followers !== "Not working"){
+                return followers
+            }
+            else{
+                return "NULL"
+            }
+        }
+        catch (e) {
+            res.send({ mssg: "Some error occured, please refresh", err: e })
+        }
+    }))
 
     // console.log(tableData)
 
