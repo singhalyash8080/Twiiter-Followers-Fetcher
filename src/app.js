@@ -1,7 +1,6 @@
 const express = require('express')
 const cors = require('cors')
 const puppeteer = require('puppeteer')
-const e = require('express')
 const app = express()
 
 // enabling cors
